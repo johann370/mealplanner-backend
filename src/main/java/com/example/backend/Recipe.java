@@ -1,23 +1,35 @@
 package com.example.backend;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "recipe")
 public class Recipe {
-    @Id @GeneratedValue private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recipe_id")
+    private Long id;
     private String name;
     private String url;
 
 
     public Recipe(){}
+
+
     public Recipe(String name, String url) {
         this.name = name;
         this.url = url;
     }
+
+    public Recipe(Long id, String name, String url) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+    }
+
+    public Long getId() {return id;}
 
     public String getName() {
         return name;
@@ -56,4 +68,6 @@ public class Recipe {
                 ", url='" + url + '\'' +
                 '}';
     }
+
+
 }
