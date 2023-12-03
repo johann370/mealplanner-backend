@@ -2,7 +2,11 @@ package com.example.backend;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
+
+import static com.example.backend.MealPlannerSheets.getSheetsRecipes;
 
 @RestController
 public class RecipeController {
@@ -32,5 +36,14 @@ public class RecipeController {
     @DeleteMapping("/recipes/{id}")
     void deleteRecipe(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    @PutMapping ("/recipes/sheets")
+    void updateFromSheets() throws GeneralSecurityException, IOException {
+        List<Recipe> updatedSheet = getSheetsRecipes();
+        for (Recipe recipe :
+                updatedSheet) {
+            repository.save(recipe);
+        }
     }
 }
