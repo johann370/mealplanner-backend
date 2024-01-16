@@ -1,10 +1,12 @@
 package com.example.backend;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.backend.MealPlannerSheets.getSheetsRecipes;
 
@@ -23,18 +25,24 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes/{id}")
-    Recipe getRecipe(@PathVariable Long id) {
-        return repository.findById(id)
-                .orElseThrow();
+    Optional<Recipe> getRecipe(@PathVariable Long id) {
+        return Optional.of(repository.findById(id)
+                .orElseThrow(() -> new RecipeNotFoundException(id)));
     }
 
     @PostMapping("/recipes")
+    @ResponseStatus(HttpStatus.CREATED)
     Recipe addRecipe(@RequestBody Recipe newRecipe){
         return repository.save(newRecipe);
     }
 
     @DeleteMapping("/recipes/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteRecipe(@PathVariable Long id) {
+        if(repository.findById(id).isEmpty()){
+            throw new RecipeNotFoundException(id);
+        }
+
         repository.deleteById(id);
     }
 
