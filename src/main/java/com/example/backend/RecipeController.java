@@ -1,6 +1,8 @@
 package com.example.backend;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -32,7 +34,7 @@ public class RecipeController {
 
     @PostMapping("/recipes")
     @ResponseStatus(HttpStatus.CREATED)
-    Recipe addRecipe(@RequestBody Recipe newRecipe){
+    Recipe addRecipe(@Valid @RequestBody Recipe newRecipe){
         return repository.save(newRecipe);
     }
 

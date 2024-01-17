@@ -1,6 +1,7 @@
 package com.example.backend;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 
@@ -11,7 +12,11 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipe_id")
     private Long id;
+
+    @NotBlank(message = "Recipe name must not be blank")
     private String name;
+
+    @NotBlank(message = "Recipe url must not be blank")
     private String url;
 
 
