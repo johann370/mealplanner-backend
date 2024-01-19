@@ -35,6 +35,10 @@ public class RecipeController {
     @PostMapping("/recipes")
     @ResponseStatus(HttpStatus.CREATED)
     Recipe addRecipe(@Valid @RequestBody Recipe newRecipe){
+        if(repository.existsByNameAndUrl(newRecipe.getName(), newRecipe.getUrl())){
+            throw new DuplicateRecipeException();
+        }
+
         return repository.save(newRecipe);
     }
 
