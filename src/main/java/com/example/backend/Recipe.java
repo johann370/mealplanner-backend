@@ -19,19 +19,23 @@ public class Recipe {
     @NotBlank(message = "Recipe url must not be blank")
     private String url;
 
+    @NotBlank(message = "Recipe image url must not be blank")
+    private String imageUrl;
 
     public Recipe(){}
 
 
-    public Recipe(String name, String url) {
+    public Recipe(String name, String url, String imageUrl) {
         this.name = name;
         this.url = url;
+        this.imageUrl = imageUrl;
     }
 
-    public Recipe(Long id, String name, String url) {
+    public Recipe(Long id, String name, String url, String imageUrl) {
         this.id = id;
         this.name = name;
         this.url = url;
+        this.imageUrl= imageUrl;
     }
 
     public Long getId() {return id;}
@@ -50,6 +54,14 @@ public class Recipe {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
@@ -71,8 +83,7 @@ public class Recipe {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
-
-
 }

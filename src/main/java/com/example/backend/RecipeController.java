@@ -1,5 +1,6 @@
 package com.example.backend;
 
+import com.example.backend.parsing.ParsedRecipe;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -10,7 +11,8 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.backend.MealPlannerSheets.getSheetsRecipes;
+import static com.example.backend.MealPlannerSheets.getSheetsUrls;
+import static com.example.backend.parsing.RecipeParser.parseRecipe;
 
 @RestController
 public class RecipeController {
@@ -54,9 +56,10 @@ public class RecipeController {
 
     @PutMapping ("/recipes/sheets")
     void updateFromSheets() throws GeneralSecurityException, IOException {
-        List<Recipe> updatedSheet = getSheetsRecipes();
-        for (Recipe recipe :
-                updatedSheet) {
+        List<String> recipeUrls = getSheetsUrls();
+        for (String url : recipeUrls) {
+            ParsedRecipe parsedRecipe = parseRecipe(url);
+            Recipe recipe = new Recipe(parsedRecipe.getTitle(), parsedRecipe.getUrl(), parsedRecipe.getImageUrl());
             repository.save(recipe);
         }
     }

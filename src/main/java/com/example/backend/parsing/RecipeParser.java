@@ -26,6 +26,6 @@ public class RecipeParser {
         String title = doc.getElementsByClass("entry-title").text();
         String imageUrl = doc.getElementsByClass("wprm-recipe-image").select("img").get(1).attr("src");
 
-        return new ParsedRecipe(title, imageUrl);
+        return new ParsedRecipe(title, url, imageUrl);
     }
 }

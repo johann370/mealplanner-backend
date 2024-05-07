@@ -51,7 +51,7 @@ public class MealPlannerSheets {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public static List<Recipe> getSheetsRecipes() throws IOException, GeneralSecurityException {
+    public static List<String> getSheetsUrls() throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         final String spreadsheetId = "1as1oiqX-KP9fVwdj9HXAPzyRs6iJDt6bhyB6KeknR9k";
         final String range = "Favorites!A2:B";
@@ -66,16 +66,16 @@ public class MealPlannerSheets {
                 .execute();
 
         List<List<Object>> values = response.getValues();
-        List<Recipe> recipes = new ArrayList<>();
+        List<String> urls = new ArrayList<>();
 
         if (values == null || values.isEmpty()) {
-            System.out.println("No data found.");
+            System.out.println("No data foundd.");
         } else {
-            System.out.println("Name, Url");
+            System.out.println("Url");
             for (List row : values) {
-                recipes.add(new Recipe(row.get(0).toString(), row.get(1).toString()));
+                urls.add(row.get(1).toString());
             }
         }
-        return recipes;
+        return urls;
     }
 }
