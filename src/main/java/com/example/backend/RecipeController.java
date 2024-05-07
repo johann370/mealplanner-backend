@@ -15,6 +15,7 @@ import static com.example.backend.MealPlannerSheets.getSheetsUrls;
 import static com.example.backend.parsing.RecipeParser.parseRecipe;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class RecipeController {
 
     private final RecipeRepository repository;
