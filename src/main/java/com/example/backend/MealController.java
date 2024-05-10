@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class MealController {
 
     private final MealRepository repository;
@@ -18,6 +19,11 @@ public class MealController {
     @GetMapping("/meals")
     List<Meal> getMeals() {
         return repository.findAll();
+    }
+
+    @GetMapping("/meals/calendar")
+    Calendar getMealsMonday() {
+        return new Calendar(repository);
     }
 
     @PostMapping("/meals")
