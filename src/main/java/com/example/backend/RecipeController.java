@@ -61,7 +61,9 @@ public class RecipeController {
         for (String url : recipeUrls) {
             ParsedRecipe parsedRecipe = parseRecipe(url);
             Recipe recipe = new Recipe(parsedRecipe.getTitle(), parsedRecipe.getUrl(), parsedRecipe.getImageUrl());
-            repository.save(recipe);
+            if(!repository.existsByNameAndUrl(recipe.getName(), recipe.getUrl())){
+                repository.save(recipe);
+            }
         }
     }
 }
