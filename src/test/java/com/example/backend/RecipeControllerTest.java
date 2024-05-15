@@ -80,6 +80,7 @@ public class RecipeControllerTest {
         JSONObject json = new JSONObject();
         json.put("name", "test");
         json.put("url", "test url");
+        json.put("imageUrl", "test image url");
         this.mockMvc.perform(post("/recipes")
                         .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toString()))
