@@ -25,7 +25,7 @@ dependencies {
 	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
 	implementation 'org.jsoup:jsoup:1.17.2'
 	implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.4.0'
-
+	implementation 'com.okta.spring:okta-spring-boot-starter:3.0.7'
 }
 
 tasks.named('test') {

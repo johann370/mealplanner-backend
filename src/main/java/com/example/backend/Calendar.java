@@ -1,5 +1,7 @@
 package com.example.backend;
 
+import com.example.backend.model.MealPlanner;
+
 import java.util.List;
 
 public class Calendar {

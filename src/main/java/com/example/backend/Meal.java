@@ -1,5 +1,9 @@
 package com.example.backend;
 
+import com.example.backend.enums.DayOfWeek;
+import com.example.backend.enums.MealType;
+import com.example.backend.model.MealPlanner;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -13,8 +17,10 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id")
     private Long id;
-    private String mealDay;
-    private String mealType;
+
+    //TODO Use Enums
+    private DayOfWeek mealDay;
+    private MealType mealType;
 
     @ManyToMany
             @JoinTable(
@@ -24,31 +30,44 @@ public class Meal {
             )
     Set<Recipe> recipes;
 
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name="meal_planner_id")
+    @JsonIgnore
+    private MealPlanner mealPlanner;
+
     public Meal(){}
 
-    public Meal(String mealDay, String mealType) {
+    public Meal(DayOfWeek mealDay, MealType mealType, MealPlanner mealPlanner) {
         this.mealDay = mealDay;
         this.mealType = mealType;
         this.recipes = new HashSet<>();
+        this.mealPlanner = mealPlanner;
+    }
+
+    public Meal(DayOfWeek mealDay, MealType mealType) {
+        this.mealDay = mealDay;
+        this.mealType = mealType;
+        this.recipes = new HashSet<>();
+        this.mealPlanner = new MealPlanner();
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getMealDay() {
+    public DayOfWeek getMealDay() {
         return mealDay;
     }
 
-    public void setMealDay(String mealDay) {
+    public void setMealDay(DayOfWeek mealDay) {
         this.mealDay = mealDay;
     }
 
-    public String getMealType() {
+    public MealType getMealType() {
         return mealType;
     }
 
-    public void setMealType(String mealType) {
+    public void setMealType(MealType mealType) {
         this.mealType = mealType;
     }
 
@@ -68,12 +87,16 @@ public class Meal {
         this.recipes.removeIf(recipe -> recipe.getId().equals(id));
     }
 
+    public MealPlanner getMealPlanner() {
+        return mealPlanner;
+    }
+
     @Override
     public String toString() {
         return "Meal{" +
                 "id=" + id +
-                ", day=" + mealDay +
-                ", type='" + mealType + '\'' +
+                ", mealDay='" + mealDay + '\'' +
+                ", mealType='" + mealType + '\'' +
                 ", recipes=" + recipes +
                 '}';
     }
