@@ -24,7 +24,7 @@ public class RecipeParser {
     public static ParsedRecipe parseBudgetBytes(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
         String title = doc.getElementsByClass("entry-title").text();
-        String imageUrl = doc.getElementsByClass("wprm-recipe-image").select("img").get(1).attr("src");
+        String imageUrl = doc.getElementsByClass("wprm-recipe-image").select("img").get(1).attr("data-lazy-src");
 
         return new ParsedRecipe(title, url, imageUrl);
     }
