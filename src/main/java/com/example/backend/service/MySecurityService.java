@@ -1,13 +1,11 @@
 package com.example.backend.service;
 
-import com.example.backend.MealRepository;
+import com.example.backend.repository.MealRepository;
 import com.example.backend.model.MealPlanner;
 import com.example.backend.repository.MealPlannerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
 
 @Service
 public class MySecurityService {

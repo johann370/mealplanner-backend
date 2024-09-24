@@ -1,14 +1,13 @@
 package com.example.backend.dto;
 
-import com.example.backend.Meal;
-import com.example.backend.Recipe;
+import com.example.backend.model.Meal;
+import com.example.backend.model.Recipe;
 import com.example.backend.enums.DayOfWeek;
 import com.example.backend.enums.MealType;
 
 import java.util.*;
 
 public class CalendarDTO {
-    //TODO Implement CalendarDTO
     public EnumMap<DayOfWeek, EnumMap<MealType, Set<Recipe>>> calendar;
 
     public CalendarDTO(Set<Meal> meals) {

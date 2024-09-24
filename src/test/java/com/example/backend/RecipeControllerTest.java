@@ -1,14 +1,14 @@
 package com.example.backend;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import org.hamcrest.Matchers;
+import com.example.backend.exception.DuplicateObjectException;
+import com.example.backend.exception.ObjectNotFoundException;
+import com.example.backend.model.Recipe;
+import com.example.backend.repository.RecipeRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,7 +22,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -105,16 +104,16 @@ public class RecipeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString()))
                 .andExpect(status().isBadRequest())
-                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof DuplicateRecipeException))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof DuplicateObjectException))
                 .andExpect(result -> assertEquals("Could not add recipe because it already exists", result.getResolvedException().getMessage()));
     }
 
     @Test
     void shouldThrowExceptionOnRecipeNotFoundGet() throws Exception {
-        when(recipeRepository.findById(1L)).thenThrow(new RecipeNotFoundException(1L));
+        when(recipeRepository.findById(1L)).thenThrow(new ObjectNotFoundException("Could not find recipe with id: 1"));
         this.mockMvc.perform(get("/recipes/1"))
                 .andExpect(status().isNotFound())
-                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof RecipeNotFoundException))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ObjectNotFoundException))
                 .andExpect(result -> assertEquals("Could not find recipe with id: 1", result.getResolvedException().getMessage()));
     }
 
@@ -150,10 +149,10 @@ public class RecipeControllerTest {
 
     @Test
     void shouldThrowExceptionOnRecipeNotFoundDelete() throws Exception {
-        when(recipeRepository.findById(1L)).thenThrow(new RecipeNotFoundException(1L));
+        when(recipeRepository.findById(1L)).thenThrow(new ObjectNotFoundException("Could not find recipe with id: 1"));
         this.mockMvc.perform(delete("/recipes/1"))
                 .andExpect(status().isNotFound())
-                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof RecipeNotFoundException))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ObjectNotFoundException))
                 .andExpect(result -> assertEquals("Could not find recipe with id: 1", result.getResolvedException().getMessage()));
     }
 

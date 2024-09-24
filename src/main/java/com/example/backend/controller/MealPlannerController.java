@@ -15,11 +15,14 @@ import java.util.List;
 @CrossOrigin(origins = {"http://jm-mealplanner.com.s3-website.us-east-2.amazonaws.com", "http://localhost:3000", "https://jm-mealplanner.xyz"})
 public class MealPlannerController {
 
-    @Autowired
-    private MealPlannerService mealPlannerService;
+    private final MealPlannerService mealPlannerService;
+    private final MySecurityService mySecurityService;
 
     @Autowired
-    private MySecurityService mySecurityService;
+    MealPlannerController(MealPlannerService mealPlannerService, MySecurityService mySecurityService){
+        this.mealPlannerService = mealPlannerService;
+        this.mySecurityService = mySecurityService;
+    }
 
 
     @GetMapping("/planner/{mealPlannerId}")

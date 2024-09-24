@@ -1,8 +1,7 @@
-package com.example.backend;
+package com.example.backend.model;
 
 import com.example.backend.enums.DayOfWeek;
 import com.example.backend.enums.MealType;
-import com.example.backend.model.MealPlanner;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -17,8 +16,6 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id")
     private Long id;
-
-    //TODO Use Enums
     private DayOfWeek mealDay;
     private MealType mealType;
 

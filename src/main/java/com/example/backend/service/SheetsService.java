@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.service;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -18,7 +18,7 @@ import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.*;
 
-public class MealPlannerSheets {
+public class SheetsService {
 
     private static final String APPLICATION_NAME = "Meal Planner Sheets";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
@@ -31,7 +31,7 @@ public class MealPlannerSheets {
     private static HttpRequestInitializer getCredentials(final NetHttpTransport HTTP_TRANSPORT)
             throws IOException {
         // Load client secrets.
-        InputStream in = MealPlannerSheets.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = SheetsService.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }

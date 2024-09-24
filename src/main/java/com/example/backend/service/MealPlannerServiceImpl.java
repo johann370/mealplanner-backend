@@ -1,8 +1,7 @@
 package com.example.backend.service;
 
-import com.example.backend.Calendar;
-import com.example.backend.Meal;
-import com.example.backend.MealRepository;
+import com.example.backend.model.Meal;
+import com.example.backend.repository.MealRepository;
 import com.example.backend.dto.CalendarDTO;
 import com.example.backend.enums.DayOfWeek;
 import com.example.backend.enums.MealType;
@@ -12,25 +11,23 @@ import com.example.backend.repository.MealPlannerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class MealPlannerServiceImpl implements MealPlannerService {
     @Autowired
-    MealPlannerRepository mealPlannerRepository;
+    private MealPlannerRepository mealPlannerRepository;
 
     @Autowired
-    MealRepository mealRepository;
+    private MealRepository mealRepository;
 
     @Override
     public MealPlanner getMealPlanner(Long mealPlannerId) {
         Optional<MealPlanner> mealPlanner = mealPlannerRepository.findById(mealPlannerId);
         if(mealPlanner.isEmpty()){
             throw new ObjectNotFoundException("Could not find meal planner with id " + mealPlannerId);
-        };
+        }
         return mealPlanner.get();
     }
 
@@ -39,7 +36,7 @@ public class MealPlannerServiceImpl implements MealPlannerService {
         Optional<MealPlanner> mealPlanner = mealPlannerRepository.findById(mealPlannerId);
         if(mealPlanner.isEmpty()){
             throw new ObjectNotFoundException("Could not find meal planner with id " + mealPlannerId);
-        };
+        }
         mealPlannerRepository.deleteById(mealPlannerId);
     }
 

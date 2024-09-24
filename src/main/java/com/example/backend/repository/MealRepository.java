@@ -1,5 +1,6 @@
-package com.example.backend;
+package com.example.backend.repository;
 
+import com.example.backend.model.Meal;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

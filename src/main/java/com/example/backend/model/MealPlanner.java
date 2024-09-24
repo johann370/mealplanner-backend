@@ -1,8 +1,6 @@
 package com.example.backend.model;
 
-import com.example.backend.Meal;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
 
 import java.util.HashSet;
 import java.util.Objects;
