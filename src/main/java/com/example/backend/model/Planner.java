@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -7,30 +8,33 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "mealplanner")
-public class MealPlanner {
+@Table(name = "planner")
+public class Planner {
+    @Schema(example = "321")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "meal_planner_id")
+    @Column(name = "planner_id")
     private Long id;
 
+    @Schema(example = "382018321")
     private String userId;
 
+    @Schema(example = "My planner")
     private String name;
 
-    @OneToMany(mappedBy = "mealPlanner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "planner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Meal> meals;
 
-    public MealPlanner() {
+    public Planner() {
     }
 
-    public MealPlanner(String userId, String name){
+    public Planner(String userId, String name){
         this.userId = userId;
         this.name = name;
         this.meals = new HashSet<>();
     }
 
-    public MealPlanner(String userId, String name, Set<Meal> meals) {
+    public Planner(String userId, String name, Set<Meal> meals) {
         this.userId = userId;
         this.meals = meals;
         this.name = name;
@@ -77,7 +81,7 @@ public class MealPlanner {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MealPlanner that = (MealPlanner) o;
+        Planner that = (Planner) o;
         return id .equals(that.id);
     }
 
@@ -88,7 +92,7 @@ public class MealPlanner {
 
     @Override
     public String toString() {
-        return "MealPlanner{" +
+        return "Planner{" +
                 "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", name='" + name + '\'' +

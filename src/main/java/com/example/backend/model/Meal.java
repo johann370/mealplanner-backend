@@ -3,6 +3,7 @@ package com.example.backend.model;
 import com.example.backend.enums.DayOfWeek;
 import com.example.backend.enums.MealType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -12,11 +13,16 @@ import java.util.Set;
 @Entity
 @Table(name = "meal")
 public class Meal {
+    @Schema(example = "3")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id")
     private Long id;
+
+    @Schema(example = "MONDAY")
     private DayOfWeek mealDay;
+
+    @Schema(example = "DINNER")
     private MealType mealType;
 
     @ManyToMany
@@ -28,24 +34,24 @@ public class Meal {
     Set<Recipe> recipes;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name="meal_planner_id")
+    @JoinColumn(name="planner_id")
     @JsonIgnore
-    private MealPlanner mealPlanner;
+    private Planner planner;
 
     public Meal(){}
 
-    public Meal(DayOfWeek mealDay, MealType mealType, MealPlanner mealPlanner) {
+    public Meal(DayOfWeek mealDay, MealType mealType, Planner planner) {
         this.mealDay = mealDay;
         this.mealType = mealType;
         this.recipes = new HashSet<>();
-        this.mealPlanner = mealPlanner;
+        this.planner = planner;
     }
 
     public Meal(DayOfWeek mealDay, MealType mealType) {
         this.mealDay = mealDay;
         this.mealType = mealType;
         this.recipes = new HashSet<>();
-        this.mealPlanner = new MealPlanner();
+        this.planner = new Planner();
     }
 
     public Long getId() {
@@ -84,8 +90,8 @@ public class Meal {
         this.recipes.removeIf(recipe -> recipe.getId().equals(id));
     }
 
-    public MealPlanner getMealPlanner() {
-        return mealPlanner;
+    public Planner getPlanner() {
+        return planner;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.controller.swagger.RecipeControllerSwagger;
 import com.example.backend.model.Recipe;
 import com.example.backend.service.RecipeService;
 import jakarta.validation.Valid;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = {"http://jm-mealplanner.com.s3-website.us-east-2.amazonaws.com", "http://localhost:3000", "https://jm-mealplanner.xyz"})
-public class RecipeController {
+public class RecipeController implements RecipeControllerSwagger {
     private final RecipeService recipeService;
 
     @Autowired
@@ -21,30 +22,35 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @Override
     @GetMapping("/recipes")
-    List<Recipe> getRecipes() {
+    public List<Recipe> getRecipes() {
         return recipeService.getRecipes();
     }
 
+    @Override
     @GetMapping("/recipes/{recipeId}")
-    Optional<Recipe> getRecipe(@PathVariable Long recipeId) {
-        return recipeService.getRecipe(recipeId);
+    public Optional<Recipe> getRecipeById(@PathVariable Long recipeId) {
+        return recipeService.getRecipeById(recipeId);
     }
 
+    @Override
     @PostMapping("/recipes")
     @ResponseStatus(HttpStatus.CREATED)
-    Recipe addRecipe(@Valid @RequestBody Recipe newRecipe){
-        return recipeService.addRecipe(newRecipe);
+    public Recipe createRecipe(@Valid @RequestBody Recipe newRecipe){
+        return recipeService.createRecipe(newRecipe);
     }
 
+    @Override
     @DeleteMapping("/recipes/{recipeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteRecipe(@PathVariable Long recipeId) {
+    public void deleteRecipe(@PathVariable Long recipeId) {
         recipeService.deleteRecipe(recipeId);
     }
 
+    @Override
     @PutMapping ("/recipes/sheets")
-    void updateFromSheets() throws GeneralSecurityException, IOException {
-        recipeService.updateFromSheets();
+    public void updateRecipesFromSheets() throws GeneralSecurityException, IOException {
+        recipeService.updateRecipesFromSheets();
     }
 }

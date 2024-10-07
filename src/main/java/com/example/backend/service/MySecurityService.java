@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
 import com.example.backend.repository.MealRepository;
-import com.example.backend.model.MealPlanner;
-import com.example.backend.repository.MealPlannerRepository;
+import com.example.backend.model.Planner;
+import com.example.backend.repository.PlannerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -11,23 +11,27 @@ import org.springframework.stereotype.Service;
 public class MySecurityService {
 
     @Autowired
-    MealPlannerRepository mealPlannerRepository;
+    PlannerRepository plannerRepository;
 
     @Autowired
     MealRepository mealRepository;
 
-    public boolean ownsMealPlanner(Jwt principal, Long mealPlannerId) {
+    public boolean ownsPlanner(Jwt principal, Long plannerId) {
 
-        return mealPlannerRepository.findById(mealPlannerId).get().getUserId().equals(principal.getClaims().get("sub").toString().replace("|", ""));
+        return plannerRepository.findById(plannerId).get().getUserId().equals(getUserIdFromPrincipal(principal));
     }
 
     public boolean ownsMeal(Jwt principal, Long mealId) {
-        MealPlanner mealPlanner = mealRepository.findById(mealId).get().getMealPlanner();
+        Planner planner = mealRepository.findById(mealId).get().getPlanner();
 
-        return mealPlanner.getUserId().equals(principal.getClaims().get("sub").toString().replace("|", ""));
+        return planner.getUserId().equals(getUserIdFromPrincipal(principal));
     }
 
     public boolean isUser(Jwt principal, String userId) {
-        return principal.getClaims().get("sub").toString().replace("|", "").equals(userId);
+        return getUserIdFromPrincipal(principal).equals(userId);
+    }
+
+    private String getUserIdFromPrincipal(Jwt principal){
+        return principal.getClaims().get("sub").toString().replace("|", "");
     }
 }

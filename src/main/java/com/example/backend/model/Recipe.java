@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -8,17 +9,21 @@ import java.util.Objects;
 @Entity
 @Table(name = "recipe")
 public class Recipe {
+    @Schema(example = "10")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipe_id")
     private Long id;
 
+    @Schema(example = "Chicken Alfredo")
     @NotBlank(message = "Recipe name must not be blank")
     private String name;
 
+    @Schema(example = "https://www.budgetbytes.com/chicken-alfredo/")
     @NotBlank(message = "Recipe url must not be blank")
     private String url;
 
+    @Schema(example = "https://www.budgetbytes.com/wp-content/uploads/2022/07/Chicken-Alfredo-above-500x500.jpg")
     @NotBlank(message = "Recipe image url must not be blank")
     private String imageUrl;
 

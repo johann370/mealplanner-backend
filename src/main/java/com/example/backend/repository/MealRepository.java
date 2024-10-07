@@ -8,5 +8,5 @@ import java.util.List;
 public interface MealRepository extends JpaRepository<Meal, Long> {
     List<Meal> findMealsByRecipesId(Long recipeId);
     List<Meal> findMealsByMealDayAndMealType(String mealDay, String mealType);
-    List<Meal> findMealsByMealPlannerId(Long mealPlannerId);
+    List<Meal> findMealsByPlannerId(Long mealPlannerId);
 }

@@ -18,7 +18,7 @@ public class MealServiceImpl implements MealService {
     private RecipeRepository recipeRepository;
 
     @Override
-    public Meal addRecipe(Long mealId, Long recipeId) {
+    public Meal addRecipeToMeal(Long mealId, Long recipeId) {
         Recipe newRecipe = recipeRepository.findById(recipeId).orElseThrow(() -> new ObjectNotFoundException("Could not find recipe with id: " + recipeId));
 
         return mealRepository.findById(mealId)
@@ -29,7 +29,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public void deleteRecipe(Long mealId, Long recipeId) {
+    public void deleteRecipeFromMeal(Long mealId, Long recipeId) {
         mealRepository.findById(mealId)
                 .map(meal -> {
                     meal.getRecipes().removeIf(recipe -> recipe.getId().equals(recipeId));

@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface RecipeService {
     List<Recipe> getRecipes();
-    Optional<Recipe> getRecipe(Long recipeId);
-    Recipe addRecipe(Recipe newRecipe);
+    Optional<Recipe> getRecipeById(Long recipeId);
+    Recipe createRecipe(Recipe newRecipe);
     void deleteRecipe(Long recipeId);
-    void updateFromSheets() throws GeneralSecurityException, IOException;
+    void updateRecipesFromSheets() throws GeneralSecurityException, IOException;
 }

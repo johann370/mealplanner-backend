@@ -27,13 +27,13 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Optional<Recipe> getRecipe(Long recipeId) {
+    public Optional<Recipe> getRecipeById(Long recipeId) {
         return Optional.of(recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new ObjectNotFoundException("Could not find recipe with id: " + recipeId)));
     }
 
     @Override
-    public Recipe addRecipe(Recipe newRecipe) {
+    public Recipe createRecipe(Recipe newRecipe) {
         if(recipeRepository.existsByNameAndUrl(newRecipe.getName(), newRecipe.getUrl())){
             throw new DuplicateObjectException("Could not add recipe because it already exists");
         }
@@ -51,7 +51,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void updateFromSheets() throws GeneralSecurityException, IOException {
+    public void updateRecipesFromSheets() throws GeneralSecurityException, IOException {
         List<String> recipeUrls = getSheetsUrls();
         for (String url : recipeUrls) {
             ParsedRecipe parsedRecipe = parseRecipe(url);
